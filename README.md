@@ -1,22 +1,21 @@
-# Pharmacy Management System - Database Project
+# Smart Parking System - Database Project
 
 ## Project Title
-**Pharmacy Management System** - A Complete Database Solution using MySQL and MongoDB
+**Smart Parking System** - A Complete Database Solution using MySQL and MongoDB
 
 ---
 
 
 ## Description
 
-This project implements a **complete database system for a pharmacy** that manages:
+This project implements a **complete database system for a  a smart parking facility** that manages:
 
-- **Medicines** - Track inventory, pricing, expiry dates
-- **Customers** - Store customer information and purchase history
-- **Employees** - Manage staff, roles, and sales performance
-- **Suppliers** - Track medicine suppliers and purchase orders
-- **Prescriptions** - Manage doctor prescriptions and required medicines
-- **Sales** - Record transactions and payments
-- **Stock** - Monitor inventory levels and automatic reorder alerts
+- **Users** - Store admin and client information with secure authentication
+- **Bookings** - Record vehicle entry/exit times and calculate parking fees
+- **Vehicles** - Manage license plate numbers linked to user accounts
+- **Transactions** - Log all payments and generate invoices
+- **Reports** - Monitor revenue, slot usage, and system performance
+- **Stock** - Track available parking spaces and automatic availability alerts
 
 The system uses **dual databases** to leverage the strengths of both relational and NoSQL paradigms.
 
