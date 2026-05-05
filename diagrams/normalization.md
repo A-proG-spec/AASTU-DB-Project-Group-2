@@ -231,3 +231,26 @@ The Smart Parking System database is fully normalized to Third Normal Form (3NF)
 | Bookings | plate_number | Vehicles(plate_number) |
 | Bookings | slot_id | Parking_Slots(slot_id) |
 | Payments | booking_id | Bookings(booking_id) |
+
+
+
+## 6. Conclusion
+
+The Smart Parking System database has been successfully normalized through all three normal forms:
+
+| Normal Form | Status | Changes Made |
+|-------------|--------|---------------|
+| 1NF | Complete | Separated single table into 5 entities with atomic values and primary keys |
+| 2NF | Complete | Verified that there is no partial dependencies exist (all PKs are single-column) |
+| 3NF | Complete | Verified that there is no transitive dependencies; all attributes depend directly on PKs |
+
+### Benefits Achieved:
+
+- **Data Integrity:** Each piece of information is stored exactly once which eliminats inconsistencies
+- **No Redundancy:** User details, slot prices, and vehicle info are never duplicated
+- **Update Efficiency:** Changing a user's VIP status or a slot's price requires updating only one row
+- **Deletion Safety:** Deleting a booking does not erase user or vehicle records
+- **Scalability:** New entities can be added without needing to restruct existing tables
+
+The normalized schema provides a solid relational database foundation for the Smart Parking System, ensuring efficient querying, data consistency, and ease of maintenance.
+
