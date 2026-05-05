@@ -1,7 +1,9 @@
 # Smart Parking System - Database Normalization
 
 **Group 2**  
+
 **Course:** Database systems(SWEG2108)
+
 **Instructor:** Yaynshet Medhin
 
 
@@ -157,3 +159,75 @@ We also verified that:
 **No changes needed.** The schema naturally satisfies 3NF. Every non-key attribute depends directly on the primary key of its table, not on another non-key attribute.
 
 **3NF** done to make sure there is no transitive dependencies exist.
+
+
+## 5. Final Normalized Schema (3NF)
+
+The Smart Parking System database is fully normalized to Third Normal Form (3NF):
+
+
+### Users Table
+| Column | Type | Key |
+|--------|------|-----|
+| user_id | Integer | Primary Key |
+| username | String | Unique |
+| password_hash | String | |
+| role | String (Admin/Client) | |
+| is_vip | Boolean | |
+
+### Vehicles Table
+| Column | Type | Key |
+|--------|------|-----|
+| plate_number | String | Primary Key |
+| user_id | Integer | Foreign Key (Users) |
+| vehicle_type | String | |
+
+### Parking_Slots Table
+| Column | Type | Key |
+|--------|------|-----|
+| slot_id | String | Primary Key |
+| slot_type | String (Normal/VIP) | |
+| price_per_hour | Float | |
+| is_occupied | Boolean | |
+
+### Bookings Table
+| Column | Type | Key |
+|--------|------|-----|
+| booking_id | Integer | Primary Key |
+| user_id | Integer | Foreign Key (Users) |
+| plate_number | String | Foreign Key (Vehicles) |
+| slot_id | String | Foreign Key (Parking_Slots) |
+| start_time | DateTime | |
+| end_time | DateTime | |
+| total_fee | Float | |
+| status | String (Active/Completed/Cancelled) | |
+
+### Payments Table
+| Column | Type | Key |
+|--------|------|-----|
+| payment_id | Integer | Primary Key |
+| booking_id | Integer | Foreign Key (Bookings) |
+| amount | Float | |
+| payment_status | String (Pending/Paid) | |
+| paid_at | DateTime | |
+
+
+
+### Entity-Relationship Summary:
+
+| Relationship | Type | Description |
+|-------------|------|-------------|
+| User → Vehicle | One-to-Many | A user can own multiple vehicles |
+| User → Booking | One-to-Many | A user can make multiple bookings |
+| ParkingSlot → Booking | One-to-Many | A slot can be booked multiple times |
+| Booking → Payment | One-to-One | Each booking has exactly one payment |
+
+### Foreign Key References:
+
+| Table | Foreign Key | References |
+|-------|-------------|------------|
+| Vehicles | user_id | Users(user_id) |
+| Bookings | user_id | Users(user_id) |
+| Bookings | plate_number | Vehicles(plate_number) |
+| Bookings | slot_id | Parking_Slots(slot_id) |
+| Payments | booking_id | Bookings(booking_id) |
