@@ -1,0 +1,1081 @@
+{
+
+  "users": [
+
+    {
+
+      "user_id": "USR001",
+
+      "password_hash": "hashed_pwd_1",
+
+      "role": "customer",
+
+      "full_name": "John Doe",
+
+      "email": "john@example.com",
+
+      "phone_number": "0912345678",
+
+      "is_vip": false,
+
+      "status": "active",
+
+      "vehicles": ["VHC001"],
+
+      "total_spent": 200.00,
+
+      "total_bookings": 2
+
+    },
+
+    {
+
+      "user_id": "USR002",
+
+      "password_hash": "hashed_pwd_2",
+
+      "role": "customer",
+
+      "full_name": "Jane Smith",
+
+      "email": "jane@example.com",
+
+      "phone_number": "0923456789",
+
+      "is_vip": true,
+
+      "status": "active",
+
+      "vehicles": ["VHC002", "VHC003"],
+
+      "total_spent": 800.00,
+
+      "total_bookings": 2
+
+    },
+
+    {
+
+      "user_id": "USR003",
+
+      "password_hash": "hashed_pwd_3",
+
+      "role": "admin",
+
+      "full_name": "Admin User",
+
+      "email": "admin@parking.com",
+
+      "phone_number": "0934567890",
+
+      "is_vip": false,
+
+      "status": "active",
+
+      "vehicles": ["VHC004"],
+
+      "total_spent": 320.00,
+
+      "total_bookings": 1
+
+    },
+
+    {
+
+      "user_id": "USR004",
+
+      "password_hash": "hashed_pwd_4",
+
+      "role": "manager",
+
+      "full_name": "Mike Manager",
+
+      "email": "manager@parking.com",
+
+      "phone_number": "0945678901",
+
+      "is_vip": false,
+
+      "status": "active",
+
+      "vehicles": ["VHC005"],
+
+      "total_spent": 0.00,
+
+      "total_bookings": 0
+
+    },
+
+    {
+
+      "user_id": "USR005",
+
+      "password_hash": "hashed_pwd_5",
+
+      "role": "customer",
+
+      "full_name": "VIP Customer",
+
+      "email": "vip@example.com",
+
+      "phone_number": "0956789012",
+
+      "is_vip": true,
+
+      "status": "active",
+
+      "vehicles": ["VHC006"],
+
+      "total_spent": 0.00,
+
+      "total_bookings": 1
+
+    },
+
+    {
+
+      "user_id": "USR006",
+
+      "password_hash": "hashed_pwd_6",
+
+      "role": "staff",
+
+      "full_name": "John Attendant",
+
+      "email": "attendant@parking.com",
+
+      "phone_number": "0967890123",
+
+      "is_vip": false,
+
+      "status": "active",
+
+      "vehicles": [],
+
+      "total_spent": 0.00,
+
+      "total_bookings": 0
+
+    }
+
+  ],
+
+
+
+  "parking_lots": [
+
+    {
+
+      "lot_id": "LOT001",
+
+      "lot_name": "Main Campus Lot",
+
+      "location": "AASTU Main Campus",
+
+      "total_slots": 50,
+
+      "available_slots": 45,
+
+      "opening_time": "06:00:00",
+
+      "closing_time": "22:00:00",
+
+      "status": "open",
+
+      "slots": []
+
+    },
+
+    {
+
+      "lot_id": "LOT002",
+
+      "lot_name": "VIP Plaza",
+
+      "location": "Bole Road",
+
+      "total_slots": 30,
+
+      "available_slots": 28,
+
+      "opening_time": "00:00:00",
+
+      "closing_time": "23:59:00",
+
+      "status": "open",
+
+      "slots": []
+
+    },
+
+    {
+
+      "lot_id": "LOT003",
+
+      "lot_name": "Shopping Mall Lot",
+
+      "location": "Mexico Square",
+
+      "total_slots": 100,
+
+      "available_slots": 80,
+
+      "opening_time": "08:00:00",
+
+      "closing_time": "23:00:00",
+
+      "status": "open",
+
+      "slots": []
+
+    }
+
+  ],
+
+
+
+  "parking_slots": [
+
+    {
+
+      "slot_id": "SLT001",
+
+      "slot_number": "A01",
+
+      "lot_id": "LOT001",
+
+      "lot_name": "Main Campus Lot",
+
+      "type": "standard",
+
+      "price_per_hour": 50.00,
+
+      "is_occupied": false,
+
+      "location_zone": "North",
+
+      "floor_number": 1,
+
+      "status": "available",
+
+      "current_booking": null
+
+    },
+
+    {
+
+      "slot_id": "SLT003",
+
+      "slot_number": "A03",
+
+      "lot_id": "LOT001",
+
+      "lot_name": "Main Campus Lot",
+
+      "type": "vip",
+
+      "price_per_hour": 100.00,
+
+      "is_occupied": true,
+
+      "location_zone": "North",
+
+      "floor_number": 1,
+
+      "status": "occupied",
+
+      "current_booking": {
+
+        "booking_id": "BKG002",
+
+        "user_name": "Jane Smith",
+
+        "user_phone": "0923456789",
+
+        "plate_number": "BB-5678",
+
+        "start_time": "2026-04-27T09:00:00"
+
+      }
+
+    },
+
+    {
+
+      "slot_id": "SLT008",
+
+      "slot_number": "C02",
+
+      "lot_id": "LOT002",
+
+      "lot_name": "VIP Plaza",
+
+      "type": "vip",
+
+      "price_per_hour": 100.00,
+
+      "is_occupied": true,
+
+      "location_zone": "East",
+
+      "floor_number": 2,
+
+      "status": "occupied",
+
+      "current_booking": {
+
+        "booking_id": "BKG004",
+
+        "user_name": "VIP Customer",
+
+        "user_phone": "0956789012",
+
+        "plate_number": "FF-1112",
+
+        "start_time": "2026-04-28T09:00:00"
+
+      }
+
+    },
+
+    {
+
+      "slot_id": "SLT006",
+
+      "slot_number": "B02",
+
+      "lot_id": "LOT001",
+
+      "lot_name": "Main Campus Lot",
+
+      "type": "compact",
+
+      "price_per_hour": 40.00,
+
+      "is_occupied": true,
+
+      "location_zone": "South",
+
+      "floor_number": 1,
+
+      "status": "occupied",
+
+      "current_booking": {
+
+        "booking_id": "BKG003",
+
+        "user_name": "Jane Smith",
+
+        "user_phone": "0923456789",
+
+        "plate_number": "CC-9012",
+
+        "start_time": "2026-04-28T10:00:00"
+
+      }
+
+    }
+
+  ],
+
+
+
+  "vehicles": [
+
+    {
+
+      "vehicle_id": "VHC001",
+
+      "plate_number": "AA-1234",
+
+      "user_id": "USR001",
+
+      "user_name": "John Doe",
+
+      "user_phone": "0912345678",
+
+      "vehicle_type": "car",
+
+      "brand": "Toyota",
+
+      "color": "White",
+
+      "registered_at": "2026-01-15"
+
+    },
+
+    {
+
+      "vehicle_id": "VHC002",
+
+      "plate_number": "BB-5678",
+
+      "user_id": "USR002",
+
+      "user_name": "Jane Smith",
+
+      "user_phone": "0923456789",
+
+      "vehicle_type": "car",
+
+      "brand": "Honda",
+
+      "color": "Black",
+
+      "registered_at": "2026-02-20"
+
+    },
+
+    {
+
+      "vehicle_id": "VHC003",
+
+      "plate_number": "CC-9012",
+
+      "user_id": "USR002",
+
+      "user_name": "Jane Smith",
+
+      "user_phone": "0923456789",
+
+      "vehicle_type": "motorcycle",
+
+      "brand": "Yamaha",
+
+      "color": "Red",
+
+      "registered_at": "2026-03-10"
+
+    },
+
+    {
+
+      "vehicle_id": "VHC004",
+
+      "plate_number": "DD-3456",
+
+      "user_id": "USR003",
+
+      "user_name": "Admin User",
+
+      "user_phone": "0934567890",
+
+      "vehicle_type": "truck",
+
+      "brand": "Ford",
+
+      "color": "Blue",
+
+      "registered_at": "2026-01-20"
+
+    },
+
+    {
+
+      "vehicle_id": "VHC005",
+
+      "plate_number": "EE-7890",
+
+      "user_id": "USR004",
+
+      "user_name": "Mike Manager",
+
+      "user_phone": "0945678901",
+
+      "vehicle_type": "car",
+
+      "brand": "Hyundai",
+
+      "color": "Silver",
+
+      "registered_at": "2026-02-10"
+
+    },
+
+    {
+
+      "vehicle_id": "VHC006",
+
+      "plate_number": "FF-1112",
+
+      "user_id": "USR005",
+
+      "user_name": "VIP Customer",
+
+      "user_phone": "0956789012",
+
+      "vehicle_type": "car",
+
+      "brand": "BMW",
+
+      "color": "Black",
+
+      "registered_at": "2026-04-01"
+
+    }
+
+  ],
+
+
+
+  "staff": [
+
+    {
+
+      "staff_id": "STF001",
+
+      "user_id": "USR006",
+
+      "user_name": "John Attendant",
+
+      "role": "attendant",
+
+      "shift_start": "08:00:00",
+
+      "shift_end": "16:00:00",
+
+      "status": "active",
+
+      "salary_history": []
+
+    },
+
+    {
+
+      "staff_id": "STF002",
+
+      "user_id": "USR001",
+
+      "user_name": "John Doe",
+
+      "role": "supervisor",
+
+      "shift_start": "09:00:00",
+
+      "shift_end": "17:00:00",
+
+      "status": "active",
+
+      "salary_history": []
+
+    }
+
+  ],
+
+
+
+  "bookings": [
+
+    {
+
+      "booking_id": "BKG001",
+
+      "user": {
+
+        "user_id": "USR001",
+
+        "full_name": "John Doe",
+
+        "phone": "0912345678",
+
+        "is_vip": false
+
+      },
+
+      "slot": {
+
+        "slot_id": "SLT001",
+
+        "slot_number": "A01",
+
+        "type": "standard",
+
+        "price_per_hour": 50.00
+
+      },
+
+      "lot": {
+
+        "lot_id": "LOT001",
+
+        "lot_name": "Main Campus Lot"
+
+      },
+
+      "vehicle": {
+
+        "vehicle_id": "VHC001",
+
+        "plate_number": "AA-1234",
+
+        "type": "car"
+
+      },
+
+      "start_time": "2026-04-27T08:00:00",
+
+      "end_time": "2026-04-27T12:00:00",
+
+      "duration": 4.00,
+
+      "total_fee": 200.00,
+
+      "payment_status": "paid",
+
+      "booking_status": "completed",
+
+      "created_at": "2026-04-27T07:30:00"
+
+    },
+
+    {
+
+      "booking_id": "BKG002",
+
+      "user": {
+
+        "user_id": "USR002",
+
+        "full_name": "Jane Smith",
+
+        "phone": "0923456789",
+
+        "is_vip": true
+
+      },
+
+      "slot": {
+
+        "slot_id": "SLT003",
+
+        "slot_number": "A03",
+
+        "type": "vip",
+
+        "price_per_hour": 100.00
+
+      },
+
+      "lot": {
+
+        "lot_id": "LOT001",
+
+        "lot_name": "Main Campus Lot"
+
+      },
+
+      "vehicle": {
+
+        "vehicle_id": "VHC002",
+
+        "plate_number": "BB-5678",
+
+        "type": "car"
+
+      },
+
+      "start_time": "2026-04-27T09:00:00",
+
+      "end_time": "2026-04-27T17:00:00",
+
+      "duration": 8.00,
+
+      "total_fee": 800.00,
+
+      "payment_status": "paid",
+
+      "booking_status": "completed",
+
+      "created_at": "2026-04-27T08:00:00"
+
+    },
+
+    {
+
+      "booking_id": "BKG003",
+
+      "user": {
+
+        "user_id": "USR002",
+
+        "full_name": "Jane Smith",
+
+        "phone": "0923456789",
+
+        "is_vip": true
+
+      },
+
+      "slot": {
+
+        "slot_id": "SLT006",
+
+        "slot_number": "B02",
+
+        "type": "compact",
+
+        "price_per_hour": 40.00
+
+      },
+
+      "lot": {
+
+        "lot_id": "LOT001",
+
+        "lot_name": "Main Campus Lot"
+
+      },
+
+      "vehicle": {
+
+        "vehicle_id": "VHC003",
+
+        "plate_number": "CC-9012",
+
+        "type": "motorcycle"
+
+      },
+
+      "start_time": "2026-04-28T10:00:00",
+
+      "end_time": null,
+
+      "duration": null,
+
+      "total_fee": null,
+
+      "payment_status": "pending",
+
+      "booking_status": "active",
+
+      "created_at": "2026-04-28T09:30:00"
+
+    }
+
+  ],
+
+
+
+  "payments": [
+
+    {
+
+      "payment_id": "PAY001",
+
+      "booking_id": "BKG001",
+
+      "amount": 200.00,
+
+      "payment_method": "cash",
+
+      "payment_date": "2026-04-27T12:00:00",
+
+      "payment_status": "completed",
+
+      "transaction_id": "TXN001"
+
+    },
+
+    {
+
+      "payment_id": "PAY002",
+
+      "booking_id": "BKG002",
+
+      "amount": 800.00,
+
+      "payment_method": "credit_card",
+
+      "payment_date": "2026-04-27T17:00:00",
+
+      "payment_status": "completed",
+
+      "transaction_id": "TXN002"
+
+    }
+
+  ],
+
+
+
+  "reservations": [
+
+    {
+
+      "reservation_id": "RES001",
+
+      "user": {
+
+        "user_id": "USR001",
+
+        "full_name": "John Doe",
+
+        "phone": "0912345678"
+
+      },
+
+      "slot": {
+
+        "slot_id": "SLT001",
+
+        "slot_number": "A01",
+
+        "type": "standard"
+
+      },
+
+      "vehicle": {
+
+        "vehicle_id": "VHC001",
+
+        "plate_number": "AA-1234"
+
+      },
+
+      "reservation_time": "2026-04-28T08:00:00",
+
+      "expiry_time": "2026-04-30T10:00:00",
+
+      "status": "active"
+
+    },
+
+    {
+
+      "reservation_id": "RES002",
+
+      "user": {
+
+        "user_id": "USR002",
+
+        "full_name": "Jane Smith",
+
+        "phone": "0923456789"
+
+      },
+
+      "slot": {
+
+        "slot_id": "SLT003",
+
+        "slot_number": "A03",
+
+        "type": "vip"
+
+      },
+
+      "vehicle": {
+
+        "vehicle_id": "VHC002",
+
+        "plate_number": "BB-5678"
+
+      },
+
+      "reservation_time": "2026-04-28T09:00:00",
+
+      "expiry_time": "2026-04-30T09:00:00",
+
+      "status": "active"
+
+    }
+
+  ],
+
+
+
+  "penalties": [
+
+    {
+
+      "penalty_id": "PEN001",
+
+      "booking_id": "BKG002",
+
+      "amount": 100.00,
+
+      "reason": "overstay",
+
+      "issued_at": "2026-04-27T17:30:00",
+
+      "status": "pending"
+
+    },
+
+    {
+
+      "penalty_id": "PEN002",
+
+      "booking_id": "BKG001",
+
+      "amount": 50.00,
+
+      "reason": "no_payment",
+
+      "issued_at": "2026-04-27T12:15:00",
+
+      "status": "paid"
+
+    }
+
+  ],
+
+
+
+  "salary_payments": [
+
+    {
+
+      "salary_id": "SAL001",
+
+      "staff_id": "STF001",
+
+      "staff_name": "John Attendant",
+
+      "amount": 5000.00,
+
+      "payment_date": "2026-04-30",
+
+      "payment_method": "bank_transfer",
+
+      "payment_status": "completed",
+
+      "month_year": "2026-04"
+
+    },
+
+    {
+
+      "salary_id": "SAL002",
+
+      "staff_id": "STF002",
+
+      "staff_name": "John Doe",
+
+      "amount": 8000.00,
+
+      "payment_date": "2026-04-30",
+
+      "payment_method": "cash",
+
+      "payment_status": "completed",
+
+      "month_year": "2026-04"
+
+    }
+
+  ],
+
+
+
+  "live_parking_status": {
+
+    "timestamp": "2026-04-28T10:00:00",
+
+    "total_lots": 3,
+
+    "total_slots": 180,
+
+    "occupied_slots": 3,
+
+    "available_slots": 153,
+
+    "maintenance_slots": 0,
+
+    "utilization_rate": 1.67,
+
+    "realtime_occupancy": [
+
+      {
+
+        "lot_name": "Main Campus Lot",
+
+        "occupied": 2,
+
+        "available": 48,
+
+        "slots": [
+
+          {
+
+            "slot_number": "A03",
+
+            "type": "vip",
+
+            "occupied_by": "Jane Smith",
+
+            "phone": "0923456789",
+
+            "plate_number": "BB-5678",
+
+            "parked_duration": "1 hour"
+
+          },
+
+          {
+
+            "slot_number": "B02",
+
+            "type": "compact",
+
+            "occupied_by": "Jane Smith",
+
+            "phone": "0923456789",
+
+            "plate_number": "CC-9012",
+
+            "parked_duration": "0 hours"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        "lot_name": "VIP Plaza",
+
+        "occupied": 1,
+
+        "available": 29,
+
+        "slots": [
+
+          {
+
+            "slot_number": "C02",
+
+            "type": "vip",
+
+            "occupied_by": "VIP Customer",
+
+            "phone": "0956789012",
+
+            "plate_number": "FF-1112",
+
+            "parked_duration": "1 hour"
+
+          }
+
+        ]
+
+      },
+
+      {
+
+        "lot_name": "Shopping Mall Lot",
+
+        "occupied": 0,
+
+        "available": 100,
+
+        "slots": []
+
+      }
+
+    ]
+
+  }
+
+}
