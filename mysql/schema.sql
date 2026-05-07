@@ -1,9 +1,5 @@
--- Create database
 CREATE DATABASE IF NOT EXISTS parking_management_system;
 USE parking_management_system;
-
-
--- 1. USER TABLE
 
 CREATE TABLE User (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -17,9 +13,6 @@ CREATE TABLE User (
     status ENUM('active', 'inactive', 'banned') DEFAULT 'active'
 );
 
-
--- 2. VEHICLE TABLE
-
 CREATE TABLE Vehicle (
     vehicle_id INT PRIMARY KEY AUTO_INCREMENT,
     plate_number VARCHAR(20) UNIQUE NOT NULL,
@@ -31,9 +24,6 @@ CREATE TABLE Vehicle (
     FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
 
-
--- 3. PARKING LOT TABLE
-
 CREATE TABLE ParkingLot (
     lot_id INT PRIMARY KEY AUTO_INCREMENT,
     lot_name VARCHAR(100) NOT NULL,
@@ -44,9 +34,6 @@ CREATE TABLE ParkingLot (
     closing_time TIME NOT NULL,
     status ENUM('open', 'closed', 'maintenance', 'full') DEFAULT 'open'
 );
-
-
--- 4. PARKING SLOT TABLE
 
 CREATE TABLE ParkingSlot (
     slot_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -61,9 +48,6 @@ CREATE TABLE ParkingSlot (
     FOREIGN KEY (lot_id) REFERENCES ParkingLot(lot_id)
 );
 
-
--- 5. STAFF TABLE
-
 CREATE TABLE Staff (
     staff_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -73,9 +57,6 @@ CREATE TABLE Staff (
     status ENUM('active', 'on_leave', 'inactive') DEFAULT 'active',
     FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
-
-
--- 6. BOOKING TABLE
 
 CREATE TABLE Booking (
     booking_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -94,9 +75,6 @@ CREATE TABLE Booking (
     FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
 );
 
-
--- 7. PAYMENT TABLE
-
 CREATE TABLE Payment (
     payment_id INT PRIMARY KEY AUTO_INCREMENT,
     booking_id INT NOT NULL,
@@ -107,9 +85,6 @@ CREATE TABLE Payment (
     transaction_id VARCHAR(100) UNIQUE,
     FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
 );
-
-
--- 8. RESERVATION TABLE
 
 CREATE TABLE Reservation (
     reservation_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -124,9 +99,6 @@ CREATE TABLE Reservation (
     FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
 );
 
-
--- 9. PENALTY TABLE
-
 CREATE TABLE Penalty (
     penalty_id INT PRIMARY KEY AUTO_INCREMENT,
     booking_id INT NOT NULL,
@@ -136,9 +108,6 @@ CREATE TABLE Penalty (
     status ENUM('pending', 'paid', 'waived') DEFAULT 'pending',
     FOREIGN KEY (booking_id) REFERENCES Booking(booking_id)
 );
-
-
--- 10. SALARY PAYMENT TABLE
 
 CREATE TABLE SalaryPayment (
     salary_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -150,12 +119,7 @@ CREATE TABLE SalaryPayment (
     month_year DATE NOT NULL,
     FOREIGN KEY (staff_id) REFERENCES Staff(staff_id)
 );
-
-
--- 11. INSERT SAMPLE DATA
-
-
--- Insert Users
+--sample datas
 INSERT INTO User (password_hash, role, full_name, email, phone_number, is_vip, status) VALUES
 ('hashed_pwd_1', 'customer', 'John Doe', 'john@example.com', '0912345678', FALSE, 'active'),
 ('hashed_pwd_2', 'customer', 'Jane Smith', 'jane@example.com', '0923456789', TRUE, 'active'),
@@ -164,7 +128,6 @@ INSERT INTO User (password_hash, role, full_name, email, phone_number, is_vip, s
 ('hashed_pwd_5', 'customer', 'VIP Customer', 'vip@example.com', '0956789012', TRUE, 'active'),
 ('hashed_pwd_6', 'staff', 'John Attendant', 'attendant@parking.com', '0967890123', FALSE, 'active');
 
--- Insert Vehicles
 INSERT INTO Vehicle (plate_number, user_id, vehicle_type, brand, color) VALUES
 ('AA-1234', 1, 'car', 'Toyota', 'White'),
 ('BB-5678', 2, 'car', 'Honda', 'Black'),
@@ -173,13 +136,11 @@ INSERT INTO Vehicle (plate_number, user_id, vehicle_type, brand, color) VALUES
 ('EE-7890', 4, 'car', 'Hyundai', 'Silver'),
 ('FF-1112', 5, 'car', 'BMW', 'Black');
 
--- Insert Parking Lots
 INSERT INTO ParkingLot (lot_name, location, total_slots, available_slots, opening_time, closing_time, status) VALUES
 ('Main Campus Lot', 'AASTU Main Campus', 50, 45, '06:00:00', '22:00:00', 'open'),
 ('VIP Plaza', 'Bole Road', 30, 28, '00:00:00', '23:59:00', 'open'),
 ('Shopping Mall Lot', 'Mexico Square', 100, 80, '08:00:00', '23:00:00', 'open');
 
--- Insert Parking Slots
 INSERT INTO ParkingSlot (slot_number, lot_id, type, price_per_hour, is_occupied, location_zone, floor_number, status) VALUES
 ('A01', 1, 'standard', 50.00, FALSE, 'North', 1, 'available'),
 ('A02', 1, 'standard', 50.00, FALSE, 'North', 1, 'available'),
@@ -192,12 +153,10 @@ INSERT INTO ParkingSlot (slot_number, lot_id, type, price_per_hour, is_occupied,
 ('C03', 2, 'electric', 90.00, FALSE, 'East', 2, 'available'),
 ('D01', 3, 'standard', 50.00, FALSE, 'West', 1, 'available');
 
--- Insert Staff
 INSERT INTO Staff (user_id, role, shift_start, shift_end, status) VALUES
 (6, 'attendant', '08:00:00', '16:00:00', 'active'),
 (1, 'supervisor', '09:00:00', '17:00:00', 'active');
 
--- Insert Bookings
 INSERT INTO Booking (user_id, slot_id, vehicle_id, start_time, end_time, duration, total_fee, payment_status, booking_status) VALUES
 (1, 1, 1, '2026-04-27 08:00:00', '2026-04-27 12:00:00', 4.00, 200.00, 'paid', 'completed'),
 (2, 3, 2, '2026-04-27 09:00:00', '2026-04-27 17:00:00', 8.00, 800.00, 'paid', 'completed'),
@@ -206,29 +165,24 @@ INSERT INTO Booking (user_id, slot_id, vehicle_id, start_time, end_time, duratio
 (1, 2, 1, '2026-04-29 14:00:00', '2026-04-29 18:00:00', 4.00, 200.00, 'pending', 'active'),
 (3, 4, 4, '2026-04-27 06:00:00', '2026-04-27 14:00:00', 8.00, 320.00, 'paid', 'completed');
 
--- Insert Payments
 INSERT INTO Payment (booking_id, amount, payment_method, payment_status, transaction_id) VALUES
 (1, 200.00, 'cash', 'completed', 'TXN001'),
 (2, 800.00, 'credit_card', 'completed', 'TXN002'),
 (4, 320.00, 'mobile_money', 'completed', 'TXN003'),
 (6, 200.00, 'telebirr', 'pending', 'TXN004');
 
--- Insert Reservations
 INSERT INTO Reservation (user_id, slot_id, vehicle_id, expiry_time, status) VALUES
 (1, 1, 1, '2026-04-30 10:00:00', 'active'),
 (2, 3, 2, '2026-04-30 09:00:00', 'active'),
 (5, 8, 6, '2026-04-29 20:00:00', 'active');
 
--- Insert Penalties
 INSERT INTO Penalty (booking_id, amount, reason, status) VALUES
 (2, 100.00, 'overstay', 'pending'),
 (1, 50.00, 'no_payment', 'paid');
 
--- Insert Salary Payments
 INSERT INTO SalaryPayment (staff_id, amount, payment_date, payment_method, payment_status, month_year) VALUES
 (1, 5000.00, '2026-04-30', 'bank_transfer', 'completed', '2026-04-01'),
 (2, 8000.00, '2026-04-30', 'cash', 'completed', '2026-04-01');
 
--- Update occupied slots
 UPDATE ParkingSlot SET is_occupied = TRUE, status = 'occupied' WHERE slot_id IN (3, 6, 8);
 UPDATE ParkingLot SET available_slots = total_slots - (SELECT COUNT(*) FROM ParkingSlot WHERE is_occupied = TRUE AND lot_id = ParkingLot.lot_id);
