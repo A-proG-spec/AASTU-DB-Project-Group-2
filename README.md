@@ -19,7 +19,18 @@
 | 6 | Arsema Desalegn | ETS0196/17 | 
 
 ---
+## Objectives 
+Automate vehicle entry and exit tracking with precision.
 
+Implement secure authentication for staff and customers.
+
+Maintain persistent data across system restarts.
+
+Provide accurate fee calculation based on time and slot type.
+
+Deliver reporting and analytics to support decision‑making.
+
+---
 ## Description
 
 This project is a **database class project** developed by **2nd year Software Engineering students at AASTU**. It implements a **complete database system for a smart parking facility** that manages:
