@@ -51,6 +51,9 @@ The Smart Parking System is designed to automate the management of parking facil
 
 ## Technologies Used
 
+Administrative Features: Manage slot lifecycle, adjust rates, monitor lot status.
+Client Features: Register accounts, view available slots, book and exit automatically with billing.
+
 | Technology | Purpose |
 | :--- | :--- |
 | **MySQL 8.0** | Relational database for structured transactional data |
