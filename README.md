@@ -34,6 +34,8 @@ This project is a **database class project** developed by **2nd year Software En
 
 The system uses **dual databases** to leverage the strengths of both relational and NoSQL paradigms.
 
+
+The Smart Parking System is designed to automate the management of parking facilities. It addresses common issues such as data inconsistency, security risks, and resource inefficiency by providing accurate tracking of vehicle entry and exit, secure authentication, and real‑time slot availability. This system ensures that both administrators and clients benefit from a reliable, efficient, and user‑friendly solution.
 ---
 
 ## Technologies Used
