@@ -118,3 +118,202 @@ Valid role and status values
  • DECIMAL(10,2) for financial fields: Exact decimal precision
  • DATETIME for timestamps: Timezone-aware tracking
  • TIME for shift times: Duration-agnostic time storage
+# DATABASE NORMALIZATION & INTEGRITY
+To ensure data redundancy is minimized, the database is normalized to the
+Third Normal Form (3NF) / BCNF. This structure prevents update anomalies and
+ensures that non-key attributes are functionally dependent only on the primary
+key.
+## Normalization Process
+Step 1: Unnormalized Form (UNF)
+ Booking(user_id, user_name, user_phone, slot_number, slot_type, price,
+ plate_number, start_time, end_time, total_fee)
+Step 2: First Normal Form (1NF) - Remove repeating groups
+ Separate repeating groups into individual rows/ tables
+Step 3: Second Normal Form (2NF) - Remove partial dependencies
+ Move slot_type, price to ParkingSlot table
+ Move user_name, user_phone to User table
+Step 4: Third Normal Form (3NF) - Remove transitive dependencies
+ No transitive dependencies remain
+Step 5: Boyce-Codd Normal Form (BCNF)
+ Every determinant is a candidate key - satisfied
+## Integrity Constraints Implemented
+ • Primary Keys: Uniquely identify each row
+ • Foreign Keys: Maintain referential integrity
+ • UNIQUE constraints: email, phone_number, plate_number, slot_number
+ • NOT NULL constraints: Required fields
+ • CHECK constraints:
+ # IMPLEMENTATION : DDL AND DML
+The database was instantiated using standard SQL scripts (see Appendix A for
+complete schema). Sample datasets were injected to simulate real-world scenarios
+including active parkers, completed stays, and slots currently under maintenance.
+## DDL Summary (schema.sql)
+ • 10 CREATE TABLE statements with all constraints
+ • Foreign key relationships with ON DELETE CASCADE/SET NULL
+ • ENUM definitions for status and type fields
+ • UNIQUE constraints for email, phone, plate_number, slot_number
+ • Indexes on frequently queried columns (status, is_occupied)
+
+## DML Summary (data insertion)
+ • User: 6 records (customers, admin, manager, staff)
+ • Vehicle: 6 records (cars, motorcycle, truck)
+ • ParkingLot: 3 records (multiple locations)
+ • ParkingSlot: 10 records (various types and zones)
+ • Staff: 2 records (attendant, supervisor)
+ • Booking: 6 records (active and completed)
+ • Payment: 4 records (various methods)
+ • Reservation: 3 records (active reservations)
+ • Penalty: 2 records (overstay, no_payment)
+ • SalaryPayment: 2 records (monthly salaries)
+## Technology Stack
+ • MySQL 8.0: Relational database engine
+ • MongoDB 6.0: NoSQL document store
+ • Draw.io: ER Diagram design
+ • Mermaid: Diagram-as-code rendering
+ • GitHub: Version control and collaboration
+# ANALYSIS: INFORMATION RETRIEVAL
+Standard retrieval queries allow staff to quickly identify available slots by
+price or location, while customers can view their active parking status and
+historical records.
+## Key Retrieval Queries (See queries.sql for complete list)
+ • Find all available slots: SELECT with status = 'available'
+ • Find VIP slots only: Filter by type = 'vip'
+ • User booking history: JOIN User + Booking + Vehicle
+ • Currently occupied slots: is_occupied = TRUE with customer info
+ • Vehicle lookup by plate: Exact match on plate_number
+## Sample Query: Available VIP Slots
+ SELECT ps.slot_number, ps.price_per_hour, pl.lot_name, pl.location
+ FROM ParkingSlot ps
+ JOIN ParkingLot pl ON ps.lot_id = pl.lot_id
+ WHERE ps.type = 'vip' AND ps.status = 'available';
+## Sample Query: Customer Active Bookings
+ SELECT b.booking_id, b.start_time, ps.slot_number, pl.lot_name
+ FROM Booking b
+ JOIN ParkingSlot ps ON b.slot_id = ps.slot_id
+ JOIN ParkingLot pl ON ps.lot_id = pl.lot_id
+ WHERE b.user_id = [user_id] AND b.booking_status = 'active';
+
+ # ANALYSIS: FINANCIAL REPORTING
+The system generates automated revenue reports, aggregating income by date and
+payment channel. This allows management to monitor the facility's economic
+health and identify peak revenue periods.
+## Revenue Reports Implemented
+ • Daily revenue summary (by date)
+ • Payment method breakdown (cash vs card vs Telebirr)
+ • Revenue by slot type (VIP vs Standard)
+ • Monthly revenue trends
+ • Revenue forecast from active bookings
+## Sample Query: Daily Revenue Report
+ SELECT DATE(payment_date) AS date,
+ SUM(amount) AS daily_revenue,
+ COUNT(payment_id) AS num_transactions,
+ ROUND(AVG(amount), 2) AS avg_transaction
+ FROM Payment
+ WHERE payment_status = 'completed'
+ GROUP BY DATE(payment_date)
+ ORDER BY date DESC;
+## Sample Query: Revenue by Slot Type
+ SELECT ps.type,
+ COUNT(p.payment_id) AS num_payments,
+ SUM(p.amount) AS total_revenue,
+ ROUND(AVG(p.amount), 2) AS avg_payment
+ FROM Payment p
+ JOIN Booking b ON p.booking_id = b.booking_id
+ JOIN ParkingSlot ps ON b.slot_id = ps.slot_id
+ WHERE p.payment_status = 'completed'
+ GROUP BY ps.type
+ ORDER BY total_revenue DESC;
+# ANALYSIS: OPERATIONAL METRICS
+By calculating the ratio of occupied to total slots per floor or per lot, the
+system provides a utilization index. This helps in directing traffic to less
+crowded zones, improving the overall flow of the facility.
+## Operational Metrics Implemented
+ • Utilization rate by floor (occupied/total * 100)
+ • Utilization rate by parking lot
+ • Average parking duration
+ • Peak hour analysis (by hour of day)
+ • Staff performance (bookings handled per staff)
+ • Slot turnover rate
+
+## Sample Query: Utilization by Parking Lot
+ SELECT pl.lot_name,
+ pl.total_slots,
+ pl.available_slots,
+ (pl.total_slots - pl.available_slots) AS occupied_slots,
+ ROUND((pl.total_slots - pl.available_slots) * 100.0 / pl.total_slots, 2) AS 
+utilization_percent
+ FROM ParkingLot pl;
+## Sample Query: Peak Hour Analysis
+ SELECT HOUR(start_time) AS hour_of_day,
+ COUNT(booking_id) AS bookings_started,
+ SUM(total_fee) AS revenue
+ FROM Booking
+ WHERE payment_status = 'paid'
+ GROUP BY HOUR(start_time)
+ ORDER BY revenue DESC
+ LIMIT 5;
+# ANALYSIS: BEHAVIORAL PATTERNS
+The database tracks user frequency, identifying "Frequent Parkers." This
+intelligence allows the business to target specific users for loyalty programs
+or VIP upgrades.
+## Behavioral Metrics Implemented
+ • Customer lifetime value (total spent per customer)
+ • Visit frequency (bookings per time period)
+ • Preferred parking hours (time-of-day analysis)
+ • Preferred slot types
+ • Cancellation rate analysis
+ • No-show rate for reservations
+## Sample Query: Top Customers by Lifetime Value
+ SELECT u.user_id,
+ u.full_name,
+ u.is_vip,
+ COUNT(b.booking_id) AS total_visits,
+ SUM(b.total_fee) AS lifetime_value,
+ ROUND(AVG(b.total_fee), 2) AS avg_per_visit
+ FROM User u
+ JOIN Booking b ON u.user_id = b.user_id
+ WHERE b.payment_status = 'paid'
+ GROUP BY u.user_id
+ ORDER BY lifetime_value DESC
+ LIMIT 10;
+ 
+## Sample Query: Reservation Conversion Rate
+ SELECT COUNT(r.reservation_id) AS total_reservations,
+ COUNT(CASE WHEN r.status = 'completed' THEN 1 END) AS converted,
+ COUNT(CASE WHEN r.status = 'expired' THEN 1 END) AS expired,
+ ROUND(COUNT(CASE WHEN r.status = 'completed' THEN 1 END) * 100.0 /
+ COUNT(r.reservation_id), 2) AS conversion_rate
+ FROM Reservation r;
+# VIP PROGRAM MODELING
+The system includes logic for a VIP tier, offering premium slots and discounted
+rates. Data analysis compares standard revenue against potential loyalty
+earnings to justify the program's expansion.
+## VIP Features Implemented
+ • is_vip boolean flag in User table
+ • VIP-only parking slots (type = 'vip')
+ • Discount logic for total_fee calculation
+ • Priority reservation windows
+ • VIP customer analytics
+## Sample Query: VIP vs Non-VIP Comparison
+ SELECT u.is_vip,
+ COUNT(b.booking_id) AS total_bookings,
+ SUM(b.total_fee) AS total_revenue,
+ ROUND(AVG(b.total_fee), 2) AS avg_booking_value
+ FROM User u
+ JOIN Booking b ON u.user_id = b.user_id
+ WHERE b.payment_status = 'paid'
+ GROUP BY u.is_vip;
+## VIP Recommendation Logic
+ Based on frequency analysis, users with:
+ • 5+ bookings per month
+ • Total monthly spend > 500 birr
+ • 0 no-shows in last 3 months
+ → Eligible for VIP upgrade invitation
+# SECURITY & ACCESS CONTROL
+Access is strictly partitioned using role-based access control (RBAC). Users
+can only interact with their own data, while Managers and Admins have graduated
+levels of oversight for maintenance and financial auditing
+
+
+
+for more detailed information please check the final report.pdf file 
+
